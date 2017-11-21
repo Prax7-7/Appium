@@ -1,0 +1,47 @@
+group 'com.test'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // https://mvnrepository.com/artifact/info.cukes/cucumber-jvm
+    compile group: 'info.cukes', name: 'cucumber-jvm', version: '1.2.5', ext: 'pom'
+    // https://mvnrepository.com/artifact/info.cukes/cucumber-java
+    compile group: 'info.cukes', name: 'cucumber-java', version: '1.2.5'
+    // https://mvnrepository.com/artifact/io.appium/java-client
+    compile group: 'io.appium', name: 'java-client', version: '5.0.0'
+    // https://mvnrepository.com/artifact/info.cukes/cucumber-junit
+    testCompile group: 'info.cukes', name: 'cucumber-junit', version: '1.2.5'
+    // https://mvnrepository.com/artifact/junit/junit
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task runAllTest(type: Test, dependsOn: ['clean', 'build']) {
+    doLast {
+        String tags = getTags()
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = sourceSets.test.runtimeClasspath
+            args = ["-p", "pretty", "-p",
+                    "json:${reporting.baseDir}/cucumber/cucumber.json",
+
+                    "--glue", "steps", "-t", tags,
+                    "${project.projectDir}/src/test/java/features"]
+        }
+    }
+}
+
+
+private String getTags() {
+    def tags = System.getProperty("tags")
+    if (tags != null)
+        return tags;
+    return "~wip"
+}

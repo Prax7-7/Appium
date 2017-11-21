@@ -1,0 +1,40 @@
+
+    // When  I launch Quikr app
+       // And I choose to log in using Google
+       // Then I see account picker screen with my email address "testemail@gmail.com"
+
+
+
+    //driver.findElement(By.xpath("//android.widget.TextView[@text='GOT IT']")).click();
+    //driver.findElement(By.xpath("//android.widget.TextView[@text='prashanthjuly07@gmail.com']")).click();
+
+
+    // Write code here that turns the phrase above into concrete actions
+           // By continueId = By.id("button1");
+           //By gotItXpath = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.RelativeLayout/android.widget.RelativeLayout[1]/android.widget.FrameLayout/android.widget.ScrollView/android.widget.RelativeLayout/android.widget.LinearLayout[2]/android.widget.GridView/android.widget.LinearLayout[13]");
+
+           //WebDriverWait wait = new WebDriverWait(driver,8);
+           /* wait.until(ExpectedConditions.presenceOfElementLocated(continueId));
+           driver.findElement(continueId).click();*/
+
+           // driver.findElement(gotItXpath).click();
+
+           // driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc=\"Open Drawer\"]")).click();
+
+           // driver.findElement(By.id("bg_header")).click();
+
+           driver.findElement(By.id("cnb_hp_choose_et")).click();
+                   driver.findElement(By.id("cnb_search_text_et")).sendKeys(carName);
+                   wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("text1"))).click();
+                   List<WebElement> results = driver.findElements(By.id("text1"));
+                   for(WebElement result : results){
+                       if(result.getText().contains(carName));{
+                           result.click();
+                           break;
+                       }
+                   }
+                   driver.findElement(By.id("cnb_search_button")).click();
+
+            List<WebElement> elements = driver.findElements(By.id("cars_ad_list_title_tv"));
+
+            Assert.assertTrue("Verified first result contains Honda",elements.get(0).getText().startsWith(carBrand));
